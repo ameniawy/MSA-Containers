@@ -5,7 +5,7 @@ RUN git clone https://gitlab.com/sherifhussien1996/flickr.git
 FROM maven:3.5-jdk-8-alpine as build
 WORKDIR /flickr
 COPY --from=clone /flickr /flickr
-RUN mvn install clean package -pl http -am
+RUN mvn install clean package --projects :http -am
 
 
 FROM openjdk:8-jre-alpine
