@@ -20,6 +20,10 @@ spec:
           env:
             - name: RABBIT_MQ_PORT
               value: "5672"
+            - name: RABBIT_MQ_USER
+              value: "guest"
+            - name: RABBIT_MQ_PASSWORD
+              value: "guest"
           args:
             - bash
             - -c
