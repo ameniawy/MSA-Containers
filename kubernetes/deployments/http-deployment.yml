@@ -17,6 +17,13 @@ spec:
       containers:
         - name: http-server
           image: ameniawy/ultimate-team-http
+          env:
+            - name: RABBIT_MQ_PORT
+              value: "15672"
+            - name: RABBIT_MQ_USER
+              value: "guest"
+            - name: RABBIT_MQ_PASSWORD
+              value: "guest"
           args:
             - /bin/sh
             - -c

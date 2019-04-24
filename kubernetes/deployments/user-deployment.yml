@@ -19,11 +19,25 @@ spec:
           image: ameniawy/ultimate-team-user
           env:
             - name: RABBIT_MQ_PORT
-              value: "5672"
+              value: "15672"
             - name: RABBIT_MQ_USER
               value: "guest"
             - name: RABBIT_MQ_PASSWORD
               value: "guest"
+            - name: ENV_TYPE
+              value: "Deployment"
+            - name: NUM_THREADS
+              value: 1
+            - name: db_initial_pool_size
+              value: 3
+            - name: db_max_pool_size
+              value: 3
+            - name: nosqldb_host
+              value: "localhost"
+            - name: nosqldb_port
+              value: "5829"
+            - name: nosqldb_name
+              value: "ULTIMATE_TEAM"
           args:
             - bash
             - -c
