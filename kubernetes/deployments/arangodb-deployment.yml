@@ -20,6 +20,8 @@ spec:
           env:
             - name: ARANGO_ROOT_PASSWORD
               value: ""
+            - name: ARANGO_NO_AUTH
+              value: "0"
           ports:
             - containerPort: 8529
       restartPolicy: Always

@@ -22,6 +22,10 @@ spec:
               value: /
             - name: RABBITMQ_ERLANG_COOKIE
               value: COOKIE
+            - name: RABBITMQ_DEFAULT_USER
+              value: user
+            - name: RABBITMQ_DEFAULT_PASS
+              value: user
           ports:
             - containerPort: 15672
             - containerPort: 5672

@@ -19,15 +19,27 @@ spec:
           image: ameniawy/ultimate-team-http
           env:
             - name: RABBIT_MQ_PORT
-              value: "15672"
+              value: "5672"
             - name: RABBIT_MQ_USER
-              value: "guest"
+              value: "user"
             - name: RABBIT_MQ_PASSWORD
-              value: "guest"
+              value: "user"
+            - name: ENV_TYPE
+              value: "Deployment"
+            - name: NUM_THREADS
+              value: "1"
+            - name: db_initial_pool_size
+              value: "3"
+            - name: db_max_pool_size
+              value: "3"
+            - name: nosqldb_port
+              value: "5829"
+            - name: nosqldb_name
+              value: "ULTIMATE_TEAM"
           args:
             - /bin/sh
             - -c
-            - sleep 10; java -jar http-0.0.1-SNAPSHOT-jar-with-dependencies.jar;
+            - sleep 10; export nosqldb_host=$ARANGO_DB_SERVICE_HOST; java -jar http-0.0.1-SNAPSHOT-jar-with-dependencies.jar;
           ports:
             - containerPort: 6380
           imagePullPolicy: Always

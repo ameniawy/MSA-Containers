@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: ADD_IMAGE_HERE
+          image: ameniawy/ultimate-team-postgres
           ports:
             - containerPort: 5432
       restartPolicy: Always
