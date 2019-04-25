@@ -5,7 +5,7 @@ metadata:
   labels:
     app: users
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: users
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: user-microservice
-          image: ameniawy/ultimate-team-user
+          image: gcr.io/ultimate-team-scalable/user-microservice
           env:
             - name: RABBIT_MQ_PORT
               value: "5672"
@@ -24,22 +24,36 @@ spec:
               value: "user"
             - name: RABBIT_MQ_PASSWORD
               value: "user"
+            - name: privateKey
+              value: "14fc1631431bf690be27e5610869f85a14fc1631431bf690be27e5610869f85a14fc1631431bf690be27e5610869f85a"
             - name: ENV_TYPE
               value: "Deployment"
             - name: NUM_THREADS
-              value: "1"
+              value: "3"
             - name: db_initial_pool_size
               value: "3"
             - name: db_max_pool_size
-              value: "3"
+              value: "5"
+            - name: MESSAGE_PREFETCH_COUNT
+              value: "10"
             - name: nosqldb_port
-              value: "5829"
+              value: "8529"
             - name: nosqldb_name
               value: "ULTIMATE_TEAM"
+            - name: db_driver
+              value: "org.postgresql.Driver"
+            - name: db_user
+              value: "postgres"
+            - name: db_password
+              value: ""
+            - name: CLASS_PREFIX
+              value: "users_microservice."
+            - name: COMMANDS
+              value: '{"/users/login": "Login", "/users/signup": "Signup", "/users/block": "BlockUser", "/users/delete": "DeleteUser", "/users/edit":"EditUser",  "/users/follow":"FollowUser", "/users/get":"GetUser", "/users/unblock":"UnblockUser", "/users/unfollow":"UnfollowUser"}'
           args:
             - bash
             - -c
-            - sleep 10; export nosqldb_host=$ARANGO_DB_SERVICE_HOST; java -jar /flickr/user/target/user-0.0.1-SNAPSHOT-jar-with-dependencies.jar;
+            - sleep 20; java -jar /flickr/user/target/user-0.0.1-SNAPSHOT-jar-with-dependencies.jar;
           ports:
             - containerPort: 6381
           imagePullPolicy: Always

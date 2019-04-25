@@ -19,4 +19,11 @@ spec:
           image: ameniawy/ultimate-team-postgres
           ports:
             - containerPort: 5432
+      #     volumeMounts:
+      #       - mountPath: /var/lib/postgresql/data
+      #         name: postgredb
+      # volumes:
+      #   - name: postgredb
+      #     persistentVolumeClaim:
+      #       claimName: postgres-pv-claim
       restartPolicy: Always
