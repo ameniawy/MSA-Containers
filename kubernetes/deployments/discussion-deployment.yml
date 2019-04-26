@@ -1,22 +1,22 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: user-microservice
+  name: discussion-microservice
   labels:
-    app: users
+    app: discussion
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: users
+      app: discussion
   template:
     metadata:
       labels:
-        app: users
+        app: discussion
     spec:
       containers:
-        - name: user-microservice
-          image: gcr.io/ultimate-team-scalable/user-microservice
+        - name: discussion-microservice
+          image: gcr.io/ultimate-team-scalable/discussion-microservice
           env:
             - name: RABBIT_MQ_PORT
               value: "5672"
@@ -47,14 +47,14 @@ spec:
             - name: db_password
               value: ""
             - name: CLASS_PREFIX
-              value: "users_microservice."
+              value: "discussions_microservice."
             - name: COMMANDS
-              value: '{"/users/login": "Login", "/users/signup": "Signup", "/users/block": "BlockUser", "/users/delete": "DeleteUser", "/users/edit":"EditUser",  "/users/follow":"FollowUser", "/users/get":"GetUser", "/users/unblock":"UnblockUser", "/users/unfollow":"UnfollowUser"}'
+              value: '{"/discussions/create": "CreateDiscussion", "/discussions/update": "UpdateDiscussion"}'
           args:
             - bash
             - -c
-            - sleep 20; java -jar /flickr/user/target/user-0.0.1-SNAPSHOT-jar-with-dependencies.jar;
+            - sleep 20; java -jar /flickr/discussion/target/discussion-0.0.1-SNAPSHOT-jar-with-dependencies.jar;
           ports:
-            - containerPort: 6381
+            - containerPort: 6387
           imagePullPolicy: Always
       restartPolicy: Always

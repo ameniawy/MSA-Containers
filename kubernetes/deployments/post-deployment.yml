@@ -1,22 +1,22 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: user-microservice
+  name: post-microservice
   labels:
-    app: users
+    app: post
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: users
+      app: post
   template:
     metadata:
       labels:
-        app: users
+        app: post
     spec:
       containers:
-        - name: user-microservice
-          image: gcr.io/ultimate-team-scalable/user-microservice
+        - name: post-microservice
+          image: gcr.io/ultimate-team-scalable/post-microservice
           env:
             - name: RABBIT_MQ_PORT
               value: "5672"
@@ -47,14 +47,14 @@ spec:
             - name: db_password
               value: ""
             - name: CLASS_PREFIX
-              value: "users_microservice."
+              value: "posts_microservice."
             - name: COMMANDS
-              value: '{"/users/login": "Login", "/users/signup": "Signup", "/users/block": "BlockUser", "/users/delete": "DeleteUser", "/users/edit":"EditUser",  "/users/follow":"FollowUser", "/users/get":"GetUser", "/users/unblock":"UnblockUser", "/users/unfollow":"UnfollowUser"}'
+              value: '{"/posts/create": "Create", "/posts/view": "View","/posts/like": "Like","/posts/delete": "Delete","/posts/search": "Search","/posts/count": "Count","/posts/hashtag": "AddHashtag", "/posts/hashtag/delete":"RemoveHashtag","/posts/recent":"ViewRecent","/posts/favorited":"ViewFavorited","/posts/favorite":"Favorite","/posts/report":"Report"}'
           args:
             - bash
             - -c
-            - sleep 20; java -jar /flickr/user/target/user-0.0.1-SNAPSHOT-jar-with-dependencies.jar;
+            - sleep 20; java -jar /flickr/post/target/post-0.0.1-SNAPSHOT-jar-with-dependencies.jar;
           ports:
-            - containerPort: 6381
+            - containerPort: 6382
           imagePullPolicy: Always
       restartPolicy: Always

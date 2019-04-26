@@ -1,6 +1,6 @@
 up: 
-	kubectl create -f deployments/.
-	kubectl create -f services/.
+	kubectl apply -f deployments/.
+	kubectl apply -f services/.
 
 down:
 	kubectl delete -f services/.

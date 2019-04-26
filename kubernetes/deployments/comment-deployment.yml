@@ -1,22 +1,22 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: user-microservice
+  name: comment-microservice
   labels:
-    app: users
+    app: comment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: users
+      app: comment
   template:
     metadata:
       labels:
-        app: users
+        app: comment
     spec:
       containers:
-        - name: user-microservice
-          image: gcr.io/ultimate-team-scalable/user-microservice
+        - name: comment-microservice
+          image: gcr.io/ultimate-team-scalable/comment-microservice
           env:
             - name: RABBIT_MQ_PORT
               value: "5672"
@@ -47,14 +47,14 @@ spec:
             - name: db_password
               value: ""
             - name: CLASS_PREFIX
-              value: "users_microservice."
+              value: "comment_microservice."
             - name: COMMANDS
-              value: '{"/users/login": "Login", "/users/signup": "Signup", "/users/block": "BlockUser", "/users/delete": "DeleteUser", "/users/edit":"EditUser",  "/users/follow":"FollowUser", "/users/get":"GetUser", "/users/unblock":"UnblockUser", "/users/unfollow":"UnfollowUser"}'
+              value: '{"/comments/create": "CreateComment", "/comments/get": "GetComment", "/comments/like": "LikeComment", "/comments/unlike":"UnlikeComment"}'
           args:
             - bash
             - -c
-            - sleep 20; java -jar /flickr/user/target/user-0.0.1-SNAPSHOT-jar-with-dependencies.jar;
+            - sleep 20; java -jar /flickr/comment/target/comment-0.0.1-SNAPSHOT-jar-with-dependencies.jar;
           ports:
-            - containerPort: 6381
+            - containerPort: 6385
           imagePullPolicy: Always
       restartPolicy: Always

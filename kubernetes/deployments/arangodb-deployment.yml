@@ -24,4 +24,11 @@ spec:
               value: "0"
           ports:
             - containerPort: 8529
+          volumeMounts:
+            - mountPath: /var/lib/arangodb3/db-data
+              name: arango-vol
+      volumes:
+        - name: arango-vol
+          persistentVolumeClaim:
+            claimName: arango-claim-1
       restartPolicy: Always
